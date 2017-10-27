@@ -29,26 +29,21 @@ class GoodController extends Controller
      */
     public function getList()
     {
-
-
+        header('Access-Control-Allow-Origin:*');
         $c = new \TopClient;
         $config = config('services.alimama');
         $c->appkey = $config['appKey'];
         $c->secretKey = $config['secretKey'];
 
-        /*$req = new \TbkItemGetRequest;
+        $req = new \TbkItemGetRequest;
         $req->setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick");
-        $req->setQ("女装");
-        $req->setCat("16,18");
-        $resp = $c->execute($req);
-        var_dump($resp);*/
+        $req->setQ("休闲零食");
+        $req->setPlatform("2");
+        //$req->setCat("16,18");
+        $data = $c->execute($req);
 
-        $req = new \ItemcatsGetRequest;
-        $req->setCids("18957,19562");
-        //$req->setDatetime("2000-01-01 00:00:00");
-        $req->setFields("cid,parent_cid,name,is_parent");
-        $req->setParentCid("50011999");
-        $resp = $c->execute($req);
-        var_dump($resp);
+        $results=(array)$data->results;
+        ///print_R($results['n_tbk_item']);
+        return response()->json(['list'=>$results['n_tbk_item']]);
     }
 }

@@ -18,4 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group([ 'namespace' => 'Api'], function () {
     Route::get('/list', 'GoodController@getList');
+
+    Route::group(['prefix'=>'auth'],function(){
+        Route::get('/token', 'AccountController@getToken');
+    });
 });
